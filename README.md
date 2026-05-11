@@ -39,3 +39,34 @@ make
 ## Usage
 
 For comprehensive help, use `dooked --help`
+
+### Runtime regex checks
+
+Pass `--checks <file>` to run custom regex checks against collected fields and
+print alerts when they match. The checks file can be a JSON object with a
+`checks` array:
+
+```json
+{
+  "checks": [
+    {
+      "field": "domain",
+      "regex": "dev|test",
+      "alert": "domain name contains an environment marker",
+      "ignore_case": true
+    },
+    {
+      "field": "response_body",
+      "regex": "copyright 2025",
+      "alert": "page may contain an outdated copyright banner",
+      "ignore_case": true
+    }
+  ]
+}
+```
+
+Supported fields are `domain`, `domain_name`, `type`, `record_type`, `info`,
+`rdata`, `ttl`, `content_length`, `http_code`, `code_string`, and
+`http_status`. Page content can be checked with `response_body`, `body`,
+`page_content`, or `content`; it is only used for matching and is not written to
+the JSON output.
