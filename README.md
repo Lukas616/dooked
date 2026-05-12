@@ -42,9 +42,9 @@ For comprehensive help, use `dooked --help`
 
 ### Runtime regex checks
 
-Pass `--checks <file>` to run custom regex checks against collected fields and
-print alerts when they match. The checks file can be a JSON object with a
-`checks` array:
+Pass `--checks <file>` or `--check-config <file>` to run custom regex checks
+against collected fields and print alerts when they match. The checks file can
+be a JSON object with a `checks` array or the array itself:
 
 ```json
 {
@@ -65,8 +65,11 @@ print alerts when they match. The checks file can be a JSON object with a
 }
 ```
 
+Each check requires `field`, `regex`, and `alert`; `pattern` is accepted as an
+alias for `regex`, and `ignore_case` is optional.
+
 Supported fields are `domain`, `domain_name`, `type`, `record_type`, `info`,
 `rdata`, `ttl`, `content_length`, `http_code`, `code_string`, and
 `http_status`. Page content can be checked with `response_body`, `body`,
-`page_content`, or `content`; it is only used for matching and is not written to
-the JSON output.
+`page_content`, or `content`; dooked keeps at most the first 64 KiB in memory
+for matching and does not write page content to the JSON output.
