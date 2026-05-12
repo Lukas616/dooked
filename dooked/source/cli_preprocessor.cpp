@@ -539,7 +539,7 @@ void start_name_checking(runtime_args_t &&rt_args) {
 
   // if we deferred HTTP/S "probe", now is the time to get to it
   if (deferring) {
-    io_context.reset();
+    io_context.restart();
     thread_pool.emplace(thread_count);
     rt_args.names.emplace(std::move(*deferred_names_));
     for (std::size_t index = 0; index < thread_count; ++index) {
